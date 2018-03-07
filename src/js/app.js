@@ -24,14 +24,14 @@ App = {
 initContract: function(item_data) {
 $.getJSON('BuyItem.json', function(data) {
 
-  alert("test" + item_data.length);
+
   var BuyItemArtifact = data;
   App.contracts.BuyItem = TruffleContract(BuyItemArtifact);
 
   // Set the provider for our contract
   App.contracts.BuyItem.setProvider(App.web3Provider);
   App.contracts.BuyItem.deployed().then(function(instance){
-    alert("test333");
+
     var idArray=[];
     var availableArray=[];
     var priceArray=[];
@@ -41,7 +41,7 @@ $.getJSON('BuyItem.json', function(data) {
       priceArray.push(item_data[i].price);
     }
 
-    return deployed.initItem(idArray, availableArray, priceArray);
+    return instance.initItem(idArray, availableArray, priceArray);
     }).catch(function(err){
   console.log(err.message);
 });
@@ -63,31 +63,12 @@ $.getJSON('BuyItem.json', function(data) {
 	  App.web3Provider = web3.currentProvider;
 	} else {
 	  // If no injected web3 instance is detected, fall back to Ganache
-	  App.web3Provider = new Web3.providers.HttpProvider('http://localhost:7545');
+	  App.web3Provider = new Web3.providers.HttpProvider('http://localhost:8545');
 	}
 	web3 = new Web3(App.web3Provider);
 
   },
-/*
-  markAdopted: function(adopters, account) {
-	var adoptionInstance;
 
-	App.contracts.Adoption.deployed().then(function(instance) {
-	  adoptionInstance = instance;
-
-	  return adoptionInstance.getAdopters.call();
-	}).then(function(adopters) {
-	  for (i = 0; i < adopters.length; i++) {
-	    if (adopters[i] !== '0x0000000000000000000000000000000000000000') {
-	      $('.panel-pet').eq(i).find('button').text('Success').attr('disabled', true);
-	    }
-	  }
-	}).catch(function(err) {
-	  console.log(err.message);
-	});
-
-  },
-*/
   buyFinish: function(result) {
 
 	var adoptionInstance;
@@ -114,14 +95,12 @@ $.getJSON('BuyItem.json', function(data) {
     var itemId = parseInt($(event.target).data('id'));
     var itemQuantity = parseInt($(event.target.parentElement).find('.quantity').val());
     //var itemAvailable = parseInt($(event.target.parentElement).find('.available').text());
-    alert("itemId:" + itemId);
-    alert("itemQuantity:" + itemQuantity);
+
 	var buyInstance;
 
 	web3.eth.getAccounts(function(error, accounts) {
 	  if (error) {
 	    console.log(error);
-		alert("error");
 	  }
 
 	  var account = accounts[0];
@@ -133,7 +112,6 @@ $.getJSON('BuyItem.json', function(data) {
 	    //alert(buyok);
 	    return buyok;
 	  }).then(function(result) {
-	    alert(result);
 	    return App.buyFinish();
 	  }).catch(function(err) {
 	    console.log(err.message);

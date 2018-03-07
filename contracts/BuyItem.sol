@@ -34,7 +34,7 @@ function buy(uint id,uint quantity) public returns (uint)
 
 }
 
-function getItemAvailable(uint id)public returns (uint) 
+function getItemAvailable(uint id) view public returns (uint) 
 {
   return itemAvailiable[id];
 }
