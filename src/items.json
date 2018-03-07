@@ -1,0 +1,34 @@
+[
+  {
+    "id": 0,
+    "name": "Frieda",
+    "picture": "images/scottish-terrier.jpeg",
+    "available": 5,
+    "description": "sadsadsadsada",
+    "price": 1
+  },
+  {
+    "id": 1,
+    "name": "Frieda",
+    "picture": "images/scottish-terrier.jpeg",
+    "available": 5,
+    "description": "sadsadsadsada",
+    "price": 2.1
+  },
+  {
+    "id": 2,
+    "name": "Frieda",
+    "picture": "images/scottish-terrier.jpeg",
+    "available": 5,
+    "description": "sadsadsadsada",
+    "price": 1.5
+  },
+  {
+    "id": 3,
+    "name": "Frieda",
+    "picture": "images/scottish-terrier.jpeg",
+    "available": 5,
+    "description": "sadsadsadsada",
+    "price": 1.2
+  }
+]

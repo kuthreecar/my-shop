@@ -1,0 +1,26 @@
+{
+  "name": "my-shop",
+  "version": "1.0.0",
+  "description": "my shop",
+  "main": "truffle.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "dev": "lite-server",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "test",
+  "license": "test",
+  "devDependencies": {
+    "gulp": "^3.9.1",
+    "lite-server": "^2.3.0"
+  },
+  "dependencies": {
+    "express": "^4.16.2",
+    "fs": "0.0.1-security",
+    "jsonfile": "^4.0.0",
+    "request": "^2.83.0",
+    "write-json-file": "^2.3.0"
+  }
+}
