@@ -8,26 +8,23 @@ mapping(uint => uint) public itemPrice;
 mapping(uint => uint) public itemAvailiable;
 
 
-function initItem(uint[] _itemId, uint[] _itemPrice, uint[] _itemAvailable) public
+function initItem(uint[] _itemId, uint[] _itemPrice, uint[] _itemAvailable) public returns (uint)
 {
   itemId = _itemId;
-
   for(uint i = 0; i < itemId.length;i++)
   {
     itemPrice[_itemId[i]]= _itemPrice[i];
     itemAvailiable[_itemId[i]] = _itemAvailable[i];
   }
+  return 1;
 }
 
-function buy(uint id,uint quantity) public returns (uint) 
+function buy(uint id,uint quantity) payable public returns (uint) 
 {
 
   require(checkValidItem(id));
+  require(itemAvailiable[id] >= quantity);
 
-  if(itemAvailiable[id] < quantity)
-  {
-    return 0;
-  }
   itemAvailiable[id] -= quantity;
   return itemAvailiable[id];
 
@@ -41,7 +38,7 @@ function getItemAvailable(uint id) view public returns (uint)
 
 function checkValidItem(uint id) view public returns(bool)
 {
-  for(uint i = 0; i < itemId.length;i++)
+  for (uint i = 0; i < itemId.length;i++)
   {
     if(itemId[i] == id)
     {
@@ -51,10 +48,6 @@ function checkValidItem(uint id) view public returns(bool)
   return false;
 }
 
-// Retrieving the adopters
-//function getBuyers() public view returns (address[16]) {
-//  return buyers;
-//}
 
 }
 

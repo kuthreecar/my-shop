@@ -30,18 +30,21 @@ $.getJSON('BuyItem.json', function(data) {
 
   // Set the provider for our contract
   App.contracts.BuyItem.setProvider(App.web3Provider);
+  
+  var initInstance;
   App.contracts.BuyItem.deployed().then(function(instance){
-
+	  
+	initInstance = instance
     var idArray=[];
     var availableArray=[];
     var priceArray=[];
     for (i = 0; i < item_data.length; i ++) {
-      idArray.push(item_data[i].name);
+      idArray.push(item_data[i].id);
       availableArray.push(item_data[i].available);
       priceArray.push(item_data[i].price);
     }
 
-    return instance.initItem(idArray, availableArray, priceArray);
+    return initInstance.initItem(idArray, availableArray, priceArray);
     }).catch(function(err){
   console.log(err.message);
 });
@@ -69,18 +72,15 @@ $.getJSON('BuyItem.json', function(data) {
 
   },
 
-  buyFinish: function(result) {
+  buyFinish: function(itemId) {
 
-	var adoptionInstance;
+	var buyInstance;
 
 	App.contracts.BuyItem.deployed().then(function(instance) {
-	  return instance.getItemAvailable.call();
+		buyInstance = instance;
+	  return buyInstance.getItemAvailable(itemId);
 	}).then(function(available) {
-	  for (i = 0; i < adopters.length; i++) {
-	    if (adopters[i] !== '0x0000000000000000000000000000000000000000') {
-	      $('.panel-pet').eq(i).find('button').text('Success').attr('disabled', true);
-	    }
-	  }
+	  alert(available);
 	}).catch(function(err) {
 	  console.log(err.message);
 	});
@@ -108,11 +108,9 @@ $.getJSON('BuyItem.json', function(data) {
 	  App.contracts.BuyItem.deployed().then(function(instance) {
 	    buyInstance = instance;
 	    // Execute adopt as a transaction by sending account
-            var buyok = buyInstance.buy(itemId, itemQuantity, {from: account});
-	    //alert(buyok);
-	    return buyok;
+            return buyInstance.buy(itemId, itemQuantity, {from: account});
 	  }).then(function(result) {
-	    return App.buyFinish();
+	    return App.buyFinish(itemId);
 	  }).catch(function(err) {
 	    console.log(err.message);
 	  });
