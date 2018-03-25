@@ -74,36 +74,6 @@ showBlock: function(cur, num) {
 	}
 	web3 = new Web3(App.web3Provider);
 
-  },
-
-  handleBuy: function(event) {
-    event.preventDefault();
-
-    var itemId = parseInt($(event.target).data('id'));
-    var itemQuantity = parseInt($(event.target.parentElement).find('.quantity').val());
-    //var itemAvailable = parseInt($(event.target.parentElement).find('.available').text());
-
-	var buyInstance;
-
-	web3.eth.getAccounts(function(error, accounts) {
-	  if (error) {
-	    console.log(error);
-	  }
-
-	  var account = accounts[0];
-
-	  App.contracts.BuyItem.deployed().then(function(instance) {
-	    buyInstance = instance;
-	    // Execute adopt as a transaction by sending account
-            return buyInstance.buy(itemId, itemQuantity, {from: account});
-	  }).then(function(result) {
-	    return App.buyFinish(itemId);
-	  }).catch(function(err) {
-	    console.log(err.message);
-      alert("Buy Failed");  
-	  });
-	});
-
   }
 
 };
