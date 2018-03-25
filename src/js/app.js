@@ -64,7 +64,12 @@ initData: function() {
 	  App.web3Provider = new Web3.providers.HttpProvider('http://localhost:8545');
 	}
 	web3 = new Web3(App.web3Provider);
-
+	web3.eth.getBlock(5, function(error, result){
+    if(!error)
+        console.log(JSON.stringify(result));
+    else
+        console.error(error);
+})
   },
 
   buyFinish: function(itemId) {
@@ -89,7 +94,7 @@ initData: function() {
 
     var itemId = parseInt($(event.target).data('id'));
     var itemQuantity = parseInt($(event.target.parentElement).find('.quantity').val());
-    //var itemAvailable = parseInt($(event.target.parentElement).find('.available').text());
+    var itemPrice = parseInt($(event.target.parentElement).find('.price').text());
 
 	var buyInstance;
 
@@ -103,7 +108,7 @@ initData: function() {
 	  App.contracts.BuyItem.deployed().then(function(instance) {
 	    buyInstance = instance;
 	    // Execute adopt as a transaction by sending account
-            return buyInstance.buy(itemId, itemQuantity, {from: account});
+            return buyInstance.buy(itemId, itemQuantity, {from: account, value: web3.toWei(itemPrice * itemQuantity, 'ether')});
 	  }).then(function(result) {
 	    return App.buyFinish(itemId);
 	  }).catch(function(err) {
