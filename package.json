@@ -2,7 +2,6 @@
   "name": "my-shop",
   "version": "1.0.0",
   "description": "my shop",
-  "main": "truffle.js",
   "directories": {
     "test": "test"
   },

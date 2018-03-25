@@ -3,55 +3,57 @@ App = {
   contracts: {},
 
   init: function() {
+    $.getJSON('../items.json', function(data) {
+      var itemsRow = $('#itemsRow');
+      var itemTemplate = $('#itemTemplate');
+
+      for (i = 0; i < data.length; i ++) {
+        itemTemplate.find('.panel-title').text(data[i].name);
+        itemTemplate.find('img').attr('src', data[i].picture);
+        itemTemplate.find('.available').text(data[i].available);
+        itemTemplate.find('.description').text(data[i].description);
+        itemTemplate.find('.btn-buy').attr('data-id', data[i].id);
+        itemsRow.append(itemTemplate.html());
+      }
     App.initWeb3();
-    App.initContract();
+    return App.initContract(data);
+    });
+
   },
 
 initContract: function(item_data) {
 $.getJSON('BuyItem.json', function(data) {
+
 
   var BuyItemArtifact = data;
   App.contracts.BuyItem = TruffleContract(BuyItemArtifact);
 
   // Set the provider for our contract
   App.contracts.BuyItem.setProvider(App.web3Provider);
+  App.contracts.BuyItem.deployed().then(function(instance){
 
-    return App.initData();
-    });
-},
-
-initData: function() {
-    var itemsRow = $('#itemsRow');
-    var itemTemplate = $('#itemTemplate');
-    var buyIteminstance;
-
-
-    App.contracts.BuyItem.deployed().then(function(instance){
-      buyIteminstance = instance
-      return buyIteminstance.getItemIDList.call();
-    }).then(function(itemList) {
-      for (i = 0; i < itemList.length; i++) {
-        var itemID = itemList[i];
-        buyIteminstance.getItemData(itemList[i]).then(function(result){
-        itemTemplate.find('.panel-title').text(result[1]);
-        itemTemplate.find('img').attr('src', result[2]);
-          itemTemplate.find('.available').text(result[5]);
-          itemTemplate.find('.price').text(result[4]);
-          itemTemplate.find('.description').text(result[3]);
-          itemTemplate.find('.btn-buy').attr('data-id',result[0]);
-          itemsRow.append(itemTemplate.html());
-
-        });
+    var idArray=[];
+    var availableArray=[];
+    var priceArray=[];
+    for (i = 0; i < item_data.length; i ++) {
+      idArray.push(item_data[i].name);
+      availableArray.push(item_data[i].available);
+      priceArray.push(item_data[i].price);
     }
-}).catch(function(err){
-    console.log(err.message);
-    });
-              return App.bindEvents();
-},
+
+    return instance.initItem(idArray, availableArray, priceArray);
+    }).catch(function(err){
+  console.log(err.message);
+});
+  return;
+});
+
+    return App.bindEvents();
+  },
 
   bindEvents: function() {
     $(document).on('click', '.btn-buy', App.handleBuy);
-    return
+    return  
   },
 
   initWeb3: function() {
@@ -67,20 +69,23 @@ initData: function() {
 
   },
 
-  buyFinish: function(itemId, event) {
+  buyFinish: function(result) {
 
-	var buyInstance;
+	var adoptionInstance;
 
 	App.contracts.BuyItem.deployed().then(function(instance) {
-		buyInstance = instance;
-	  return buyInstance.getItemData(itemId);
+	  return instance.getItemAvailable.call();
 	}).then(function(available) {
-  	alert("Buy Succeed");
-    $(event.target.parentElement).find('.available').text(result[5]);
+	  for (i = 0; i < adopters.length; i++) {
+	    if (adopters[i] !== '0x0000000000000000000000000000000000000000') {
+	      $('.panel-pet').eq(i).find('button').text('Success').attr('disabled', true);
+	    }
+	  }
 	}).catch(function(err) {
 	  console.log(err.message);
 	});
 
+	alert("buy succeed")
 
   },
 
@@ -103,12 +108,13 @@ initData: function() {
 	  App.contracts.BuyItem.deployed().then(function(instance) {
 	    buyInstance = instance;
 	    // Execute adopt as a transaction by sending account
-            return buyInstance.buy(itemId, itemQuantity, {from: account});
+            var buyok = buyInstance.buy(itemId, itemQuantity, {from: account});
+	    //alert(buyok);
+	    return buyok;
 	  }).then(function(result) {
-	    return App.buyFinish(itemId, event);
+	    return App.buyFinish();
 	  }).catch(function(err) {
 	    console.log(err.message);
-      alert("Buy Failed");  
 	  });
 	});
 

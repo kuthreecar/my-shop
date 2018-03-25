@@ -1,34 +1,34 @@
 [
   {
     "id": 0,
-    "name": "Frieda",
-    "picture": "images/scottish-terrier.jpeg",
+    "name": "Black Bag",
+    "picture": "images/blackbag.jpg",
     "available": 5,
-    "description": "sadsadsadsada",
-    "price": 1
+    "description": "Black Bag",
+    "price": 15
   },
   {
     "id": 1,
-    "name": "Frieda",
-    "picture": "images/scottish-terrier.jpeg",
-    "available": 5,
-    "description": "sadsadsadsada",
-    "price": 2.1
+    "name": "Black Handbag",
+    "picture": "images/blackhandbag.jpg",
+    "available": 3,
+    "description": "Brown Handbag",
+    "price": 20
   },
   {
     "id": 2,
-    "name": "Frieda",
-    "picture": "images/scottish-terrier.jpeg",
-    "available": 5,
-    "description": "sadsadsadsada",
-    "price": 1.5
+    "name": "Brown handbag",
+    "picture": "images/brownhandbag.jpg",
+    "available": 7,
+    "description": "Brown handbag",
+    "price": 30
   },
   {
     "id": 3,
-    "name": "Frieda",
-    "picture": "images/scottish-terrier.jpeg",
-    "available": 5,
-    "description": "sadsadsadsada",
-    "price": 1.2
+    "name": "Rocksack",
+    "picture": "images/rocksack.jpg",
+    "available": 4,
+    "description": "Rocksack",
+    "price": 20
   }
 ]
