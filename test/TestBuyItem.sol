@@ -21,7 +21,7 @@ function testCheckValidItem2() public {
   bool expected = false;
   Assert.equal(returned, expected, "CheckValidItem2 Fail");
 }
-
+/*
 function testGetItemData() public {
 string memory a;string memory b;string memory c;
  uint d;uint e;
@@ -29,7 +29,7 @@ string memory a;string memory b;string memory c;
   aa = "Rocksack";
   Assert.equal(a, aa, "testGetItemData Fail");
 }
-
+*/
 // Test buy if not available
 // A little utility that runs a wrapped method invocation as an internal Solidity call
 // Returns true if the underlying call succeeds and false if it throws.

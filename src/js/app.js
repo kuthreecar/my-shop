@@ -67,7 +67,7 @@ initData: function() {
 
   },
 
-  buyFinish: function(itemId, event) {
+  buyFinish: function(itemId) {
 
 	var buyInstance;
 
@@ -76,7 +76,7 @@ initData: function() {
 	  return buyInstance.getItemData(itemId);
 	}).then(function(available) {
   	alert("Buy Succeed");
-    $(event.target.parentElement).find('.available').text(result[5]);
+	location.reload();
 	}).catch(function(err) {
 	  console.log(err.message);
 	});
@@ -105,7 +105,7 @@ initData: function() {
 	    // Execute adopt as a transaction by sending account
             return buyInstance.buy(itemId, itemQuantity, {from: account});
 	  }).then(function(result) {
-	    return App.buyFinish(itemId, event);
+	    return App.buyFinish(itemId);
 	  }).catch(function(err) {
 	    console.log(err.message);
       alert("Buy Failed");  
