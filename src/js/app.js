@@ -64,11 +64,7 @@ initData: function() {
 	  App.web3Provider = new Web3.providers.HttpProvider('http://localhost:8545');
 	}
 	web3 = new Web3(App.web3Provider);
-	web3.eth.getBlock(5, function(error, result){
-    if(!error)
-        console.log(JSON.stringify(result));
-    else
-        console.error(error);
+
 })
   },
 
@@ -113,7 +109,7 @@ initData: function() {
 	    return App.buyFinish(itemId);
 	  }).catch(function(err) {
 	    console.log(err.message);
-      alert("Buy Failed");  
+      alert("Buy Failed");
 	  });
 	});
 
