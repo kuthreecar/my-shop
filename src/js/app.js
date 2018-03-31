@@ -65,7 +65,6 @@ initData: function() {
 	}
 	web3 = new Web3(App.web3Provider);
 
-})
   },
 
   buyFinish: function(itemId) {

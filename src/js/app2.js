@@ -26,7 +26,7 @@ showBlock: function(cur, num) {
 	web3.eth.getBlock(cur, function(error, result){
 		if(!error)
 		{
-		console.log(result);
+		//console.log(result);
           blockTemplate.find('.number').text(result.number);
           blockTemplate.find('.hash').text(result.hash);
           blockTemplate.find('.parentHash').text(result.parentHash);
@@ -46,6 +46,8 @@ showBlock: function(cur, num) {
           blockTemplate.find('.timestamp').text(result.timestamp);
           blockTemplate.find('.transactions').text(result.transactions);
           blockTemplate.find('.uncles').text(result.uncles);
+          blockTemplate.find('.btn').attr("data-target", "#block-panel-" + cur);
+          blockTemplate.find('.panel-body').attr("id", "block-panel-" + cur);
 
 			  blockRow.append(blockTemplate.html());
 		}
