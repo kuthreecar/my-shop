@@ -18,7 +18,7 @@
     "express": "^4.16.2",
     "fs": "0.0.1-security",
     "jsonfile": "^4.0.0",
-    "lite-server": "^2.3.0",
+    "lite-server": "^2.6.1",
     "request": "^2.83.0",
     "write-json-file": "^2.3.0"
   }
